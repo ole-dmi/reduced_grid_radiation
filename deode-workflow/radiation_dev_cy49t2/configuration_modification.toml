@@ -1,0 +1,58 @@
+[scheduler.ecfvars]
+  case_prefix = "RADIATION_DEV_"
+
+[submission]
+  bindir = "/perm/dnk5089/install/IAL-DEODE/dev-cy49t2-v1.0.0-radiation/bin"
+
+[namelist_update.master.forecast.naerad]
+  LAER3D=true                            # using 3D or real-time aerosols? Might be important?
+  LUSEPRE2017RAD=false                   # To use ecRad
+  LRRTM=true                             # To use ecRad
+  LSRTM=true                             # To use ecRad
+  NAER=0                                 # Aerosol option, used, 1 by default, 0=no aerosols
+  NRADFR=18                              # Variable for intermittent
+  NAERMACC=0                             # Means CAMS, needed
+  NOZOCL=4                               # Ozon climatology choice
+  NSW=6                                  # No. of shortwave bands, s-g funny happening...
+  RRE2DE=0.64952                         # Geometrical factor for hexagonal particles, not sure if needed
+  NDUMPBADINPUTS=0                       # ??
+  NICEOPT=3                              # Ice option, Internal for old scheme
+  NLIQOPT=2                              # Liquid option, Internal for old scheme
+  NMCICA=1                               # old scheme, hopefully
+  NOVLP=1                                # Overlap - not needed
+  NRADIP=3                               # effective radius size ice particle, probl. not used
+  NRADLP=2                               # effective radius size liquid particle, prob. not used
+  RLWINHF=1                              # Long wave inhomogenity, old scheme, spp-patterns ensemble
+  RSWINHF=1                              # Short wave inhomogenity, old scheme, spp-patterns ensemble
+
+
+[namelist_update.master.forecast.namarphy]
+  LRDUST=false
+
+[namelist_update.master.forecast.radiation]
+  iverbose=1                             # from 1 to 5
+  iverbosesetup=3                        # highest is 5
+  directory_name="/hpcperm/hlam/data/ecrad"                     # can change
+  do_clear=true                          # clear sky and all sky calculations if TRUE
+  do_save_radiative_properties=false     # default FALSE
+  do_save_spectral_flux=false            # Goes into seperate file, for debugging...
+  do_save_gpoint_flux=false              # A lot of data
+  do_surface_sw_spectral_flux=true       # For spectral coupling to the surface
+  use_aerosols=true                      # FALSE: all aerosol input ignored, should always be TRUE?!
+  do_lw_derivatives=true                 # Diagnostig, set to FALSE?
+  gas_model_name='RRTMG-IFS'             # Other options in user guide, only in offline ecRad
+  cloud_mixing_ratio_threshold=0.100E-08  # less water than this then considered no cloud
+  cloud_inhom_decorr_scaling= 1.00       # Same decorralation scale for cloud edges and cloud internal inhomogenity
+  cloud_fraction_threshold= 0.100E-05     # less tan this then no cloud
+  use_beta_overlap= false                # not using beta -> then using alpha overlap, default
+  liquid_model_name='Nielsen'            # ### had to use Slingo as again we are missing the nc file
+  ice_model_name='Fu-IFS'                # Operational option, other might be better
+  do_fu_lw_ice_optics_bug=false          # There is a bug in the IFS, can be rectified if you want
+  overlap_scheme_name='Exp-Ran'          # Most sensible choice, IFS used a different one
+  sw_solver_name='McICA'                 # Short wave , McICA is the operational one
+  lw_solver_name='McICA'                 # Long wave, possible to use different from SW but need a reason
+  do_sw_delta_scaling_with_gases=false   # FALSE: only cloud particles, TRUE: also with gases
+  do_lw_cloud_scattering=false           # TRUE: more expensive, better, but the cost is more than the benefit
+  do_lw_aerosol_scattering=false         # benefit of TRUE is even smaller than for the cloud scattering
+
+#
