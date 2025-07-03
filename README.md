@@ -96,4 +96,3 @@ tail -f CreateGrib.log
 
 
 And compare the output to the reference results again ...
-

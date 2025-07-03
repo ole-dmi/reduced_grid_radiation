@@ -1,0 +1,25 @@
+flowchart TD
+    FV[FIELD_VARIABLES]
+    GP_MODEL@{ shape: subproc, label: "GP_MODEL"}
+    CPG_DRV@{ shape: subproc, label: "CPG_DRV"}
+    CPG@{ shape: subproc, label: "CPG"}
+    CPG_GP_TENC@{ shape: subproc, label: "CPG_GP_TENC"}
+    CPG_GP@{ shape: subproc, label: "CPG_GP"}
+    MF_PHYS@{ shape: subproc, label: "MF_PHYS"}
+    MF_PHYS_NHQE_PART1@{ shape: subproc, label: "MF_PHYS_NHQE_PART1"}
+    APL_AROME@{ shape: subproc, label: "APL_AROME"}
+    MF_PHYS_TRANSFER@{ shape: subproc, label: "MF_PHYS_TRANSFER"}
+    APL_AROME_ADJUST@{ shape: subproc, label: "APL_AROME_ADJUST"}
+    APL_AROME_RADIATION@{ shape: subproc, label: "APL_AROME_RADIATION"}
+
+    FV        <-- VDVARS  --> GP_MODEL 
+    GP_MODEL  <-- YDVARS  --> CPG_DRV
+    CPG_DRV   <-- YLVARS_ --> CPG
+    CPG       <-- YDVARS  --> CPG_GP_TENC
+    CPG       <-- YDVARS  --> CPG_GP
+    CPG       <-- YDVARS  --> MF_PHYS
+    MF_PHYS   <-- YDVARS  --> MF_PHYS_NHQE_PART1
+    MF_PHYS   <-- YDVARS  --> APL_AROME
+    APL_AROME <-- YDVARS  --> MF_PHYS_TRANSFER
+    APL_AROME <-- YDVARS  --> APL_AROME_ADJUST
+    APL_AROME <-- YDVARS  --> APL_AROME_RADIATION

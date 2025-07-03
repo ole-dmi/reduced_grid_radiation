@@ -1,0 +1,15 @@
+flowchart TD
+
+field["field:ydfield"]
+gp_model@{shape: subproc}
+mf_raddrv@{ shape: subproc, label: "mf_raddrv"}
+mf_radintg@{ shape: subproc, label: "mf_radintg"}
+mf_rad_prep@{ shape: subproc, label: "mf_rad_prep"}
+apl_arome_radiation@{ shape: subproc, label: "apl_arome_radiation"}
+
+field               <--> gp_model
+gp_model   <-- field --> mf_raddrv
+mf_raddrv  <-- field --> mf_rad_prep
+mf_raddrv  <-- field --> mf_radintg
+
+

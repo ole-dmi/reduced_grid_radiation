@@ -1,0 +1,11 @@
+flowchart TD
+
+mf_raddrv@{ shape: subproc, label: "mf_raddrv</br>+ MF_PHYS_DATA: phys_data(NGPBLKS)"}
+mf_rad_prep@{ shape: subproc, label: "mf_rad_prep"}
+mf_radintg@{ shape: subproc, label: "mf_radintg"}
+apl_arome_radiation@{ shape: subproc, label: "apl_arome_radiation"}
+
+mf_raddrv  <-- phys_data(IBL) --> mf_rad_prep
+mf_raddrv  -- phys_data(IBL) --> mf_radintg
+
+

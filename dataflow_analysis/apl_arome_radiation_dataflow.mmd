@@ -1,0 +1,69 @@
+flowchart TD
+
+mf_raddrv@{ shape: subproc, label: "mf_raddrv"}
+mf_radintg@{ shape: subproc, label: "mf_radintg"}
+apl_arome_radiation@{ shape: subproc, label: "apl_arome_radiation"}
+gp_model@{ shape: subproc, label: "gp_model"}
+MODEL[MODEL: YDMODEL]
+
+MODEL    <--> gp_model
+gp_model   -- YDMODEL       --> mf_raddrv
+mf_raddrv  -- YDMODEL       --> mf_radintg
+mf_radintg -- YDMODEL%YRCST --> apl_arome_radiation
+mf_radintg -- YDMODEL       --> apl_arome_radiation
+
+MF_PHYS_BASE_STATE_TYPE["MF_PHYS_BASE_STATE_TYPE: YDMF_PHYS_BASE_STATE"]
+
+
+
+A["YDVARS Input: "]
+
+A["YDVARS%A%T1 "]
+A["YDVARS%GEOMETRY%GECLO%T0"]
+A["YDVARS%GEOMETRY%GELAM%T0"]
+A["YDVARS%GEOMETRY%GESLO%T0"]
+A["YDVARS Output:"]
+A["YDVARS%IRAD%T1"]
+A["YDVARS%LRAD%T1"]
+
+A["Input:"]
+A["MF_PHYS_BASE_STATE_TYPE : YDMF_PHYS_BASE_STATE"]
+A["MF_PHYS_SURF_TYPE       : YDMF_PHYS_SURF"]
+A["MF_PHYS_TYPE            : YDMF_PHYS"]
+A["GEOMETRY                : YDGEOMETRY"]
+A["CPG_BNDS_TYPE           : YDCPG_BNDS"]
+A["CPG_OPTS_TYPE           : YDCPG_OPTS"]
+A["CPG_MISC_TYPE           : YDCPG_MISC"]
+A["CPG_GPAR_TYPE           : YDCPG_GPAR"]
+A["TSURF                   : YDSURF"]
+A["LOGICAL: LDMSE"]
+A["LOGICAL: LDSFORCS"]
+A["REAL: PALB_FORC"]
+A["REAL: PEMIS_FORC"]
+A["REAL: PADTMS"]
+A["REAL: PCPM(KLON,KFLEVG)"]
+A["REAL: PQVM(KLON,KFLEVG)"]
+A["REAL: PTM (KLON,KFLEVG)"]
+A["REAL: PQIM(KLON,KFLEVG)"]
+A["REAL: PQSM(KLON,KFLEVG)"]
+A["REAL: PQGM(KLON,KFLEVG)"]
+A["REAL: PQCM(KLON,KFLEVG)"]
+A["REAL: PQRM(KLON,KFLEVG)"]
+A["REAL: PQHM(KLON,KFLEVG)"]
+A["REAL: PEXNREFM(KFDIA, KFLEVG)"]
+A["REAL: PRDG_MU0(KLON)"]
+A["REAL: PRDG_SOLO(KLON)"]
+A["REAL: PAERD(KFDIA,KFLEVG)"]
+A["REAL: PRDG_MU0M(KLON)"]
+A["REAL: PRDG_MU0LU(KLON)"]
+A["REAL: PCLDROP(KFDIA, KFLEVG)"]
+A["REAL: PPIZA_DST(KFDIA,KFLEVG,NSWB_MNH)"]
+A["REAL: PCGA_DST(KFDIA,KFLEVG,NSWB_MNH)"]
+A["REAL: PTAUREL_DST(KFDIA,KFLEVG,NSWB_MNH)"]
+A["REAL: PAEROM(KFDIA, KFLEVG,NAERO)"]
+
+A["Input/Output:"]
+A["REAL: PTENDT(KLON, KFLEVG)"]
+A["FIELD_VARIABLES: YDVARS"]
+A["UA_PHYS_SPP_VARS: YSPP_ALL"]
+A["TYP_DDH: YDDDH"]
