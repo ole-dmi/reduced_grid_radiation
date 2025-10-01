@@ -1,3 +1,10 @@
+
+
+
+
+
+
+
 ```
 ecinteractive -c 32 -m 32G -s 60G
 ec_restore_local_ssd -r
@@ -19,7 +26,61 @@ python compare_radiation_results.py
  sbatch Forecast_radiation_dev.job
 ```
 
+```
+ #!/bin/bash
+#SBATCH --job-name=test-threaded
+#SBATCH --qos=np
+#SBATCH --time=4:30:00
+#SBATCH --cpus-per-task=128
+#SBATCH --output=ial-deode_build.log
+#SBATCH --error=ial-deode_build.log
+
+export FP_PRECISION=double
+
+export INSTALL_DIR=/perm/dnk5089/install/IAL-DEODE/dev-cy49t2-v1.0.0-radiation
+export EXT_INSTALLDIR=$INSTALL_DIR
+export IAL_DIR=/home/dnk5089/dev/IAL-DEODE
+
+export BUILD_DIR=/etc/ecmwf/ssd/ssd1/ecinteractive/dnk5089-ecinteractive/build/IAL-DEODE/build
+export BUILD_DIR_EXT=/etc/ecmwf/ssd/ssd1/ecinteractive/dnk5089-ecinteractive/build/IAL-DEODE/build_ext
+
+#export BUILD_DIR=$SCRATCH/build/IAL-DEODE/dev-cy49t2-v1.0.0-radiation/build
+#export BUILD_DIR_EXT=$SCRATCH/build/IAL-DEODE/dev-cy49t2-v1.0.0-radiation/build_ext
+
  
+#export BUILD_DIR=/hpcperm/dnk5089/build/IAL-DEODE/dev-cy49t2-v1.0.0-radiation/build
+#export BUILD_DIR_EXT=/hpcperm/dnk5089/build/IAL-DEODE/dev-cy49t2-v1.0.0-radiation/build_ext
+
+    
+
+export FP_PRECISION=double
+
+source $IAL_DIR/cmake/config/atos_setenv_intel
+
+
+# build external libraries (fiat ectrans field_api)
+#cmake -S $IAL_DIR/external -DCMAKE_INSTALL_PREFIX=$INSTALL_DIR -DCMAKE_C_COMPILER=mpicc -DCMAKE_Fortran_COMPILER=$IAL_DIR/cmake/mpifort_wrapper -B $BUILD_DIR_EXT
+#cmake --build $BUILD_DIR_EXT -j 128
+#cmake --install $BUILD_DIR_EXT
+
+export SURFEX_OFFLINE_BINARIES="yes"
+
+
+#export FFLAGS="-check all"
+#cmake --build . --target help
+
+#cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo -S $IAL_DIR -DCMAKE_INSTALL_PREFIX=$INSTALL_DIR -DCMAKE_C_COMPILER=mpicc -DCMAKE_Fortran_COMPILER=$IAL_DIR/cmake/mpifort_wrapper  -DCMAKE_Fortran_FLAGS="-check all" -DFFLAGS="-check all" -B $BUILD_DIR
+cmake --build  $BUILD_DIR -j 128 # --verbose
+#cmake --build  $BUILD_DIR --target arpifsdev-static -j 128 # --verbose
+#cmake --build  $BUILD_DIR --target MASTERODB -j 128 # --verbose
+if [ $? -ne 0 ]; then
+    echo "[compile-oli.sh] Error: CMake configuration failed!"
+    exit 1
+fi
+
+cmake --install $BUILD_DIR
+```
+
 
 
 
