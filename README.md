@@ -1,3 +1,27 @@
+
+ecinteractive -c 32 -m 32G -s 60G
+ec_restore_local_ssd -r
+cd $LOCALSSD
+cd build/IAL-DEODE
+ ./compile-oli.sh 
+
+cd dev/IAL-DEODE
+git commit -a -m "removed acnebr, aplpar and ec_phys related modifications to model:ydmodel, enabling ydmodel to be input instead of in-output to mf_raddrv"
+
+cd dev/reduced_grid_radiation/
+source ~/.venv/python3.11.10/bin/activate
+python compare_radiation_results.py 
+./compare_radiation_results_md5sum.sh 
+
+
+
+ cd dev/Deode-Workflow/
+ sbatch Forecast_radiation_dev.job 
+
+
+
+
+
 # Reduced grid radiation development
 
 This is how I set up and run my Deode-Workflow reference and development cases.
