@@ -1,4 +1,4 @@
-
+```
 ecinteractive -c 32 -m 32G -s 60G
 ec_restore_local_ssd -r
 cd $LOCALSSD
@@ -16,7 +16,10 @@ python compare_radiation_results.py
 
 
  cd dev/Deode-Workflow/
- sbatch Forecast_radiation_dev.job 
+ sbatch Forecast_radiation_dev.job
+```
+
+ 
 
 
 
