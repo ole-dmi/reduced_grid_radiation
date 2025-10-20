@@ -179,8 +179,8 @@ deode run --task CreateGrib --config-file $REDUCED_GRID_RADIATION/deode-workflow
 Now run the forcast job and see the log file:
 
 ```
-sbatch Forcast.job
-tail -f Forcast.log
+sbatch Forecast.job
+tail -f Forecast.log
 ```
 
 When its done, run the create grib job and see its log file:
