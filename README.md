@@ -126,6 +126,14 @@ deode case ?deode/data/config_files/configurations/cy49t2_arome $REDUCED_GRID_RA
 deode case ?deode/data/config_files/configurations/cy49t2_arome $REDUCED_GRID_RADIATION/deode-workflow/radiation_dev_cy49t2/configuration_modification.toml -o $REDUCED_GRID_RADIATION/deode-workflow/radiation_dev_cy49t2/configuration_generated.toml --start-suite
 ```
 
+I have set up a local connection to my ECMWF server. To connect I run the following commands in a local terminal:
+```
+ssh -N -L 3141:ecfg-dnk5089-1:3141 ecs-login &
+conda activate python-3.13_conda; ecflow_ui &
+```
+where `ecfg-dnk5089-1` is the my assigned ECMWF ecflow server, `ecs-login` is my ssh config host for connecting to ECMWF ATOS and `ecflow_ui` is installed in the conda environment.
+
+
 Open ecflow to check that the suites are running. 
 To be able to rerun the forecast and create grib files again we need to stop the ```PostMortem``` ecflow tast from running. Thats done by right clicking the ```PostMortem``` task in ecflow and click ```Suspend```.
 
